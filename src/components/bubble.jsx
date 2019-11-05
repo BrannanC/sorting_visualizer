@@ -15,6 +15,7 @@ export default function Bubble() {
   const [i, setI] = useState(0);
   const [speed, setSpeed] = useState(20);
   const [isSorting, setIsSorting] = useState(false);
+  const [amount, setAmount] = useState(20);
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -53,7 +54,7 @@ export default function Bubble() {
 
   const reset = e => {
     e.preventDefault();
-    setItems(generateList(20));
+    setItems(generateList(amount));
     setI(0);
     setIsSorted(false);
   };
@@ -62,19 +63,40 @@ export default function Bubble() {
     setSpeed(e.target.value);
   };
 
+  const handleN = e => {
+    setAmount(e.target.value);
+    setItems(generateList(amount));
+    setI(0);
+    setIsSorted(false);
+  };
+
   return (
     <>
       <div className="top-part">
         <p>Bubble</p>
+        <div className="n">
+          <input
+            type="range"
+            name="n"
+            min="5"
+            max="100"
+            step="0.5"
+            onChange={handleN}
+            disabled={isSorting}
+            value={amount}
+          />
+          <label htmlFor="speed">n (# of items)</label>
+        </div>
         <div className="speed">
           <input
             type="range"
             name="speed"
             min="1"
-            max="20"
+            max="100"
             step="0.5"
             onChange={handleSpeed}
             disabled={isSorting}
+            value={speed}
           />
           <label htmlFor="speed">Speed</label>
         </div>
