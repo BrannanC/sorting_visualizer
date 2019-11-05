@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 
-const initItems = [2, 1, 5, 3, 4, 10, 9, 8, 22, 11];
+const generateList = num => {
+  const initItems = [];
+  while (initItems.length < num) {
+    let r = Math.floor(Math.random() * 100) + 1;
+    if (initItems.indexOf(r) === -1) initItems.push(r);
+  }
+  return initItems;
+};
 
 export default function Bubble() {
   const [isSorted, setIsSorted] = useState(false);
-  const [items, setItems] = useState(initItems);
+  const [items, setItems] = useState(generateList(20));
   const [i, setI] = useState(0);
-  const [speed, setSpeed] = useState(10);
+  const [speed, setSpeed] = useState(20);
   const [isSorting, setIsSorting] = useState(false);
 
   function sleep(ms) {
@@ -46,7 +53,7 @@ export default function Bubble() {
 
   const reset = e => {
     e.preventDefault();
-    setItems(initItems);
+    setItems(generateList(20));
     setI(0);
     setIsSorted(false);
   };
@@ -64,7 +71,7 @@ export default function Bubble() {
             type="range"
             name="speed"
             min="1"
-            max="10"
+            max="20"
             step="0.5"
             onChange={handleSpeed}
             disabled={isSorting}
@@ -89,11 +96,10 @@ export default function Bubble() {
               <div
                 className="item"
                 style={{
-                  height: `${(item * 200) / items.length}px`,
+                  height: `${item}%`,
                   opacity: `${ind === i ? 0.75 : 1}`
                 }}
               ></div>
-              {ind === i && <h2>·</h2>}
             </div>
           );
         })}
