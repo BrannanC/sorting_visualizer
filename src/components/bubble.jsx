@@ -6,6 +6,8 @@ export default function Bubble() {
   const [isSorted, setIsSorted] = useState(false);
   const [items, setItems] = useState(initItems);
   const [i, setI] = useState(0);
+  const [speed, setSpeed] = useState(10);
+  const [isSorting, setIsSorting] = useState(false);
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -24,38 +26,74 @@ export default function Bubble() {
     e.preventDefault();
     let current = [...items];
     let didSwap = true;
+    setIsSorting(true);
     while (!!didSwap) {
       didSwap = false;
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items.length - 1; i++) {
         if (current[i] > current[i + 1]) {
           current = await swap(i, current);
           didSwap = true;
           //   console.log(items);
         }
-        await sleep(550);
+        setI(i);
+
+        await sleep(1200 / speed);
       }
     }
+    setIsSorting(false);
+    setIsSorted(true);
+  };
+
+  const reset = e => {
+    e.preventDefault();
+    setItems(initItems);
+    setI(0);
+    setIsSorted(false);
+  };
+
+  const handleSpeed = e => {
+    setSpeed(e.target.value);
   };
 
   return (
     <>
-      <p>Bubble</p>
-      <button
-        onClick={e => {
-          bubbleSort(e);
-        }}
-      >
-        Step
+      <div className="top-part">
+        <p>Bubble</p>
+        <div className="speed">
+          <input
+            type="range"
+            name="speed"
+            min="1"
+            max="10"
+            step="0.5"
+            onChange={handleSpeed}
+            disabled={isSorting}
+          />
+          <label htmlFor="speed">Speed</label>
+        </div>
+      </div>
+      <button onClick={isSorted ? reset : bubbleSort}>
+        {isSorted ? "Reset" : "Sort"}
       </button>
+
       <div className="visulaizer-box">
-        {items.map(item => {
+        {items.map((item, ind) => {
           return (
             <div
               key={item}
-              className="item"
-              style={{ height: `${(item * 200) / items.length}px` }}
+              className="item-wrapper"
+              style={{
+                width: `${100 / items.length}%`
+              }}
             >
-              {item}
+              <div
+                className="item"
+                style={{
+                  height: `${(item * 200) / items.length}px`,
+                  opacity: `${ind === i ? 0.75 : 1}`
+                }}
+              ></div>
+              {ind === i && <h2>·</h2>}
             </div>
           );
         })}

@@ -16,8 +16,39 @@
   justify-content: space-evenly;
 }
 
+.item-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 2px;
+}
+
 .item {
   background: rebeccapurple;
-  flex-grow: 1;
-  margin: 1rem;
+}
+
+.top-part {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.speed {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font-size: 2rem;
+  margin: 5px;
+  border-radius: 5px;
+  border: 2px solid rebeccapurple;
+  background: rebeccapurple;
+  color: white;
+}
+
+button:hover {
+  background: rgb(166, 86, 245);
+  cursor: pointer;
 }
