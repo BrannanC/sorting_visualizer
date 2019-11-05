@@ -40,6 +40,7 @@ export default function Selection() {
     for (let i = 0; i < items.length - 1; i++) {
       local_smallest = i;
       setSmallest(i);
+      setI(i);
 
       for (let j = i; j < items.length; j++) {
         if (current[j] < current[local_smallest]) {
@@ -49,7 +50,6 @@ export default function Selection() {
         setJ(j);
         await sleep(400 / speed);
       }
-      setI(i);
       current = await swap(i, local_smallest, current);
       setSmallest(i);
       await sleep(1200 / speed);
