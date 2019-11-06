@@ -13,7 +13,7 @@ export default function Insertion() {
   const [isSorted, setIsSorted] = useState(false);
   const [items, setItems] = useState(generateList(20));
   const [i, setI] = useState(0);
-  const [j, setJ] = useState(0);
+  const [j, setJ] = useState(1);
   const [speed, setSpeed] = useState(20);
   const [isSorting, setIsSorting] = useState(false);
   const [amount, setAmount] = useState(20);
@@ -54,6 +54,7 @@ export default function Insertion() {
     e.preventDefault();
     setItems(generateList(amount));
     setI(0);
+    setJ(1);
     setIsSorted(false);
   };
 
