@@ -41,7 +41,6 @@ export default function Bubble() {
         if (current[i] > current[i + 1]) {
           current = await swap(i, current);
           didSwap = true;
-          //   console.log(items);
         }
         setI(i);
 
@@ -101,7 +100,7 @@ export default function Bubble() {
           <label htmlFor="speed">Speed</label>
         </div>
       </div>
-      <button onClick={isSorted ? reset : bubbleSort}>
+      <button disabled={isSorting} onClick={isSorted ? reset : bubbleSort}>
         {isSorted ? "Reset" : "Sort"}
       </button>
 

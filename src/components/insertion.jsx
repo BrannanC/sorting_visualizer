@@ -9,12 +9,11 @@ const generateList = num => {
   return initItems;
 };
 
-export default function Selection() {
+export default function Insertion() {
   const [isSorted, setIsSorted] = useState(false);
   const [items, setItems] = useState(generateList(20));
   const [i, setI] = useState(0);
   const [j, setJ] = useState(0);
-  const [smallest, setSmallest] = useState(0);
   const [speed, setSpeed] = useState(20);
   const [isSorting, setIsSorting] = useState(false);
   const [amount, setAmount] = useState(20);
@@ -23,38 +22,30 @@ export default function Selection() {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  const swap = async (i, smallest, current) => {
-    const temp = current[i];
-    current[i] = current[smallest];
-    current[smallest] = temp;
-    setItems(current);
-    return current;
+  const swap = async (i, current) => {
+    const copyItems = [...current];
+    const temp = copyItems[i];
+    copyItems[i] = copyItems[i - 1];
+    copyItems[i - 1] = temp;
+    setItems(copyItems);
+    return copyItems;
   };
 
-  const selectionSort = async e => {
+  const insertionSort = async e => {
     e.preventDefault();
     let current = [...items];
-    let local_smallest = 0;
     setIsSorting(true);
-
-    for (let i = 0; i < items.length - 1; i++) {
-      local_smallest = i;
-      setSmallest(i);
+    for (let i = 1; i < items.length; i++) {
       setI(i);
-
-      for (let j = i; j < items.length; j++) {
-        if (current[j] < current[local_smallest]) {
-          local_smallest = j;
-          setSmallest(j);
-        }
+      let temp = items[i];
+      let j = i;
+      while (j > 0 && temp < current[j - 1]) {
         setJ(j);
-        await sleep(400 / speed);
+        current = await swap(j, current);
+        j -= 1;
+        await sleep(1200 / speed);
       }
-      current = await swap(i, local_smallest, current);
-      setSmallest(i);
-      await sleep(1200 / speed);
     }
-
     setIsSorting(false);
     setIsSorted(true);
   };
@@ -80,7 +71,7 @@ export default function Selection() {
   return (
     <>
       <div className="top-part">
-        <p>Selection</p>
+        <p>Insertion</p>
         <div className="n">
           <input
             type="range"
@@ -108,7 +99,7 @@ export default function Selection() {
           <label htmlFor="speed">Speed</label>
         </div>
       </div>
-      <button disabled={isSorting} onClick={isSorted ? reset : selectionSort}>
+      <button disabled={isSorting} onClick={isSorted ? reset : insertionSort}>
         {isSorted ? "Reset" : "Sort"}
       </button>
 
@@ -125,9 +116,9 @@ export default function Selection() {
               <div
                 className="item"
                 style={{
-                  background: `${ind === smallest ? "red" : "rebeccapurple"}`,
                   height: `${item}%`,
-                  opacity: `${ind === i ? 0.75 : ind === j ? 0.75 : 1}`
+                  opacity: `${ind === j - 1 || ind === i ? 0.75 : 1}`,
+                  background: `${ind === j - 1 ? "aqua" : ""}`
                 }}
               ></div>
             </div>
