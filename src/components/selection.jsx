@@ -63,6 +63,8 @@ export default function Selection() {
     e.preventDefault();
     setItems(generateList(amount));
     setI(0);
+    setJ(0);
+    setSmallest(0);
     setIsSorted(false);
   };
 
