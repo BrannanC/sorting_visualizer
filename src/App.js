@@ -4,6 +4,7 @@ import "./App.css";
 import Bubble from "./components/bubble";
 import Selection from "./components/selection";
 import Insertion from "./components/insertion";
+import QuickSort from "./components/quick";
 
 function App() {
   const [selectSort, setSelectSort] = useState("bubble");
@@ -25,11 +26,13 @@ function App() {
           <option value="bubble">Bubble</option>
           <option value="selection">Selection</option>
           <option value="insertion">Insertion</option>
+          <option value="quick">Quick Sort</option>
         </select>
       </header>
       {selectSort === "bubble" && <Bubble />}
       {selectSort === "selection" && <Selection />}
       {selectSort === "insertion" && <Insertion />}
+      {selectSort === "quick" && <QuickSort />}
     </div>
   );
 }
