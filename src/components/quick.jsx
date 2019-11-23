@@ -120,7 +120,7 @@ export default function QuickSort() {
   return (
     <>
       <div className="top-part">
-        <p>Bubble</p>
+        <p>Quick Sort</p>
         <div className="n">
           <input
             type="range"
