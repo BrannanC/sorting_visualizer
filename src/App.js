@@ -5,6 +5,7 @@ import Bubble from "./components/bubble";
 import Selection from "./components/selection";
 import Insertion from "./components/insertion";
 import QuickSort from "./components/quick";
+import MergeSort from "./components/merge";
 
 function App() {
   const [selectSort, setSelectSort] = useState("bubble");
@@ -27,12 +28,14 @@ function App() {
           <option value="selection">Selection</option>
           <option value="insertion">Insertion</option>
           <option value="quick">Quick Sort</option>
+          <option value="merge">Merge Sort</option>
         </select>
       </header>
       {selectSort === "bubble" && <Bubble />}
       {selectSort === "selection" && <Selection />}
       {selectSort === "insertion" && <Insertion />}
       {selectSort === "quick" && <QuickSort />}
+      {selectSort === "merge" && <MergeSort />}
     </div>
   );
 }
